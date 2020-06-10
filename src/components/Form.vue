@@ -9,6 +9,7 @@
         <button class="btn btn-primary btn-block" @click="addNote" type="button" :disabled="!isNoteReady(note)">Add</button>
     </form>
 
+    <!-- The card should be a separate component -->
     <section class="notes">
         <div v-for="(note, i) in reverse" v-bind:key="note" class="overflow-hidden">
             <h3>{{note.title}}</h3>
