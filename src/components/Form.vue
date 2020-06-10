@@ -6,7 +6,7 @@
         <input type="text" id="title" v-model="note.title" class="form-control">
         <label for="#description">Description</label>
         <textarea name="" id="description" class="form-control" v-model="note.description"></textarea>
-        <button class="btn btn-primary btn-block" @click="addNote" type="button">Add</button>
+        <button class="btn btn-primary btn-block" @click="addNote" type="button" :disabled="!isNoteReady(note)">Add</button>
     </form>
 
     <section class="notes">
@@ -42,18 +42,23 @@ export default {
     methods: {
         addNote: function() {
             let {title, description} = this.note;
-            this.notes.push({
-                title,
-                description,
-                date: new Date(Date.now()).toLocaleString()
-            });
-            this.note = {}
-            document.getElementById('title').focus()
+            if(this.isNoteReady(this.note)) {
+                this.notes.push({
+                    title,
+                    description,
+                    date: new Date(Date.now()).toLocaleString()
+                });
+                this.note = {title:'', description:''}
+                document.getElementById('title').focus()
+            }
         },
         deleteNote: function(i) {
             let index = this.notes.length -1 - i;
             this.notes.splice(index, 1);
             this.note = {}
+        },
+        isNoteReady: function(note) {
+            return (note.title !== '' && note.description !== '')
         }
     }
 }
